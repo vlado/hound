@@ -95,8 +95,8 @@ App.directive 'repo', ['Subscription', 'StripeCheckout', 'User', (Subscription, 
         eventName = "Public Repo Activated"
         price = 0.0
 
-      window.analytics.track eventName,
-        properties:
-          name: repo.full_github_name
-          revenue: price
+      # window.analytics.track eventName,
+      #   properties:
+      #     name: repo.full_github_name
+      #     revenue: price
 ]
