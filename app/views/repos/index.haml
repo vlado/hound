@@ -5,5 +5,8 @@
 - if display_onboarding?
   = render 'onboarding'
 
-%section.organization-list{ 'organization-list' => '' }
-= render 'preload_template', template: 'organization_list'
+
+= react_component('RepoList', {hasPrivateRepoAccess: current_user.has_access_to_private_repos?}, { prerender: false })
+
+-# %section.organization-list{ 'organization-list' => '' }
+-# = render 'preload_template', template: 'organization_list'

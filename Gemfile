@@ -27,12 +27,14 @@ gem "paranoia", "~> 2.0"
 gem "pg"
 gem "puma"
 gem "rails", "4.2.7.1"
+gem 'react-rails'
 gem "resque", "~> 1.25.0"
 gem "resque-scheduler"
 gem "resque-sentry"
 gem "rest-client", ">= 1.8.0"
 gem "sass-rails"
 gem "split", require: "split/dashboard"
+gem 'sprockets-es6'
 gem "stripe"
 gem "uglifier", ">= 2.7.2"
 
