@@ -6,7 +6,4 @@
   = render 'onboarding'
 
 
-= react_component('RepoList', {hasPrivateRepoAccess: current_user.has_access_to_private_repos?}, { prerender: false })
-
--# %section.organization-list{ 'organization-list' => '' }
--# = render 'preload_template', template: 'organization_list'
+= react_component('RepoList', {userHasCard: current_user.stripe_customer_id.present?, hasPrivateRepoAccess: current_user.has_access_to_private_repos?}, { prerender: false })

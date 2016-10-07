@@ -1,21 +1,17 @@
 const Repo = React.createClass({
-  renderToggle() {
-    if (this.props.repo.admin) {
-      return (
-        <button className="repo-toggle ">
-        </button>
-      )
-    } else {
-      return (
-        <div className="repo-rtestricted">
-          Only repo admins can activate
-        </div>
-      );
-    }
+  shouldHide() {
+    const { repo, searchTerm } = this.props;
+
+    const repoName = repo.full_github_name.toLowerCase();
+    return repoName.indexOf(searchTerm.toLowerCase()) === -1;
   },
 
   render() {
-    const { repo } = this.props;
+    const { repo, searchTerm } = this.props;
+
+    if (this.shouldHide()) {
+      return null;
+    }
 
     return (
       <li className={classNames("repo", {"repo--active": repo.active})}>
@@ -23,7 +19,7 @@ const Repo = React.createClass({
           {repo.full_github_name}
         </div>
         <div className="repo-activation-toggle">
-          {this.renderToggle()}
+          <RepoActivationButton repo={repo}/>
         </div>
       </li>
     );

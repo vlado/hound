@@ -1,7 +1,7 @@
 const Organization = React.createClass({
   render() {
     return (
-      <div>
+      <div className="organization">
         <header className="organization-header">
           <h2 className="organization-header-title">
             {this.props.organizationName}
@@ -11,7 +11,14 @@ const Organization = React.createClass({
         <section className="repo-listing">
           <ul className="repos">
             {this.props.repos.map(repo => {
-              return <Repo key={repo.github_id} repo={repo}/>
+              return (
+                <Repo
+                  key={repo.github_id}
+                  repo={repo}
+                  searchTerm={this.props.searchTerm}
+                  userHasCard={this.props.userHasCard}
+                />
+              );
             })}
           </ul>
         </section>
