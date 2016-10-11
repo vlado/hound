@@ -4,16 +4,7 @@ const RepoList = React.createClass({
   },
 
   componentDidMount: function() {
-    $.get('/repos.json').then((repos) => {
-      const organizations = _.groupBy(repos, repo => {
-        return repo.owner.name;
-      });
-
-      this.setState({
-        loading: false, 
-        organizations
-      });
-    });
+    this.fetchRepos();
   },
 
   render() {
@@ -61,10 +52,25 @@ const RepoList = React.createClass({
         return repo.owner.name;
       });
 
+      // This should probably be handled by the back-end
+      // if (repos.length === 0) {
+      //   this.sync();
+      // }
+
       this.setState({
         loading: false, 
         organizations
       });
     });
   },
+
+  sync() {
+    const token = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+      data: {'authenticity_token': token},
+      url: `/repo_syncs`,
+      method: 'POST',
+    });
+  }
 });

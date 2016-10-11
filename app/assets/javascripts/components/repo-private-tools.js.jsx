@@ -6,8 +6,7 @@ const RepoPrivateTools = React.createClass({
       // HANDLE SYNCING
       return (
         <div className="repo-tools-private">
-          <form className="button_to" action="/auth/github?access=full">
-            <input type="hidden" value={token} name="authenticity_token"/>
+          <form className="button_to" method="post" action="/auth/github?access=full">
             <button
               className="repo-tools-private-button"
               type="submit"
