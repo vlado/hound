@@ -53,9 +53,7 @@ class AccountEmailUpdater extends React.Component {
             />
           </div>
           <div className="form-actions">
-            <button className="button-small" onClick={
-              event => this.onUpdateEmail(event)
-            }>
+            <button className="button-small" onClick={this.onUpdateEmail}>
               Update Email
             </button>
           </div>
