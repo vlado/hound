@@ -4,7 +4,7 @@ class RepoToolsPrivate extends React.Component {
 
     return (
       <div className="repo-tools-private">
-        <form className="button_to" method="post" action="/auth/github?access=full">
+        <form method="post" action="/auth/github?access=full">
           <button
             className="repo-tools-private-button"
             type="submit"

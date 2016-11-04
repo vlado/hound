@@ -1,12 +1,18 @@
 class ReposContainer extends React.Component {
+  state = {
+    filterTerm: null,
+    isProcessingId: null,
+    isSyncing: false,
+    organizations: [],
+    repos: []
+  }
+
   fetchReposAndOrgs() {
     $.ajax({
       url: "/repos.json",
       type: "GET",
       dataType: "json",
-      success: data => {
-        this.onFetchReposAndOrgsSuccess(data);
-      },
+      success: this.onFetchReposAndOrgsSuccess.bind(this),
       error: () => {
         alert("Your repos failed to load.");
       }
@@ -14,7 +20,7 @@ class ReposContainer extends React.Component {
   }
 
   onFetchReposAndOrgsSuccess(data) {
-    if (data.length == 0) {
+    if (data.length === 0) {
       this.onRefreshClicked();
     } else {
       this.setState({repos: data});
@@ -34,14 +40,6 @@ class ReposContainer extends React.Component {
 
   orgName(name) {
     return _.split(name, "/")[0];
-  }
-
-  state = {
-    isSyncing: false,
-    isProcessingId: null,
-    filterTerm: null,
-    repos: [],
-    organizations: []
   }
 
   componentWillMount() {
@@ -88,7 +86,7 @@ class ReposContainer extends React.Component {
   }
 
   commitRepoToState(repo) {
-    repoIdx = _.findIndex(this.state.repos, {id: repo.id});
+    const repoIdx = _.findIndex(this.state.repos, {id: repo.id});
 
     const newRepos = React.addons.update(
       this.state.repos, {
@@ -180,7 +178,7 @@ class ReposContainer extends React.Component {
 
   onRepoClicked(id) {
     this.setState({isProcessingId: id});
-    let repo = _.find(this.state.repos, {id: id});
+    const repo = _.find(this.state.repos, {id: id});
 
     if (repo.active) {
       if (repo.stripe_subscription_id) {
@@ -220,7 +218,7 @@ class ReposContainer extends React.Component {
       dataType: "json",
       success: data => {
         if (data.refreshing_repos) {
-          setTimeout(() => { this.handleSync() }, 1000);
+          setTimeout(this.handleSync, 1000);
         } else {
           this.fetchReposAndOrgs();
         }
@@ -235,9 +233,7 @@ class ReposContainer extends React.Component {
       url: "/repo_syncs.json",
       type: "POST",
       dataType: "text", // to trigger success() on 201 and empty response
-      success: () => {
-        this.handleSync();
-      },
+      success: this.handleSync.bind(this),
       error: () => {
         this.setState({isSyncing: false});
         alert("Your repos failed to sync.");
@@ -249,17 +245,19 @@ class ReposContainer extends React.Component {
     $.post("/auth/github?access=full");
   }
 
-  onSearchInput(term) {
-    this.setState({filterTerm: term});
+  onSearchInput(event) {
+    this.setState({filterTerm: event.target.value});
   }
 
   trackRepoActivated(repo) {
+    let eventName = null, price = null
+
     if (repo.private) {
-      var eventName = "Private Repo Activated";
-      var price = repo.price_in_dollars;
+      eventName = "Private Repo Activated";
+      price = repo.price_in_dollars;
     } else {
-      var eventName = "Public Repo Activated";
-      var price = 0.0;
+      eventName = "Public Repo Activated";
+      price = 0.0;
     }
 
     window.analytics.track(eventName, {
@@ -277,9 +275,9 @@ class ReposContainer extends React.Component {
       <div>
         <RepoTools
           showPrivateButton={!has_private_access}
-          onSearchInput={(event) => this.onSearchInput(event)}
-          onRefreshClicked={(event) => this.onRefreshClicked(event)}
-          onPrivateClicked={(event) => this.onPrivateClicked(event)}
+          onSearchInput={this.onSearchInput.bind(this)}
+          onRefreshClicked={this.onRefreshClicked.bind(this)}
+          onPrivateClicked={this.onPrivateClicked}
           isSyncing={this.state.isSyncing}
         />
         <ReposView
@@ -287,7 +285,7 @@ class ReposContainer extends React.Component {
           organizations={this.state.organizations}
           repos={this.state.repos}
           filterTerm={this.state.filterTerm}
-          onRepoClicked={(event) => this.onRepoClicked(event)}
+          onRepoClicked={this.onRepoClicked.bind(this)}
           isProcessingId={this.state.isProcessingId}
          />
       </div>

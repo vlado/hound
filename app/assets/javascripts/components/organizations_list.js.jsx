@@ -30,7 +30,7 @@ class OrganizationsList extends React.Component {
           <Organization
             name={org.name}
             key={org.id || org.name}
-            repos={this.reposForOrg(org) || null}
+            repos={this.reposForOrg(org)}
             onRepoClicked={onRepoClicked}
             filterTerm={filterTerm}
             isProcessingId={isProcessingId}
