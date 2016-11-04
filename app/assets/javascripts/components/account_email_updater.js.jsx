@@ -22,10 +22,7 @@ class AccountEmailUpdater extends React.Component {
       data: {billable_email: this.state.emailInput},
       dataType: "text",
       success: () => {
-        this.setState({
-          addressChanged: true,
-          emailAddress: this.state.emailInput
-        });
+        this.setState({ addressChanged: true });
       },
       error: () => {
         this.setState({addressChanged: false});
@@ -35,7 +32,7 @@ class AccountEmailUpdater extends React.Component {
 
   render() {
     const { billable_email } = this.props;
-    const placeholder = this.state.emailAddress || billable_email;
+    const placeholder = this.state.emailInput || billable_email;
 
     return (
       <article className="account-details">
