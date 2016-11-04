@@ -86,7 +86,7 @@ class ReposContainer extends React.Component {
   }
 
   commitRepoToState(repo) {
-    repoIdx = _.findIndex(this.state.repos, {id: repo.id});
+    const repoIdx = _.findIndex(this.state.repos, {id: repo.id});
 
     const newRepos = React.addons.update(
       this.state.repos, {
