@@ -272,8 +272,8 @@ class ReposContainer extends React.Component {
         <RepoTools
           showPrivateButton={!has_private_access}
           onSearchInput={this.onSearchInput.bind(this)}
-          onRefreshClicked={(event) => this.onRefreshClicked(event)}
-          onPrivateClicked={(event) => this.onPrivateClicked(event)}
+          onRefreshClicked={this.onRefreshClicked.bind(this)}
+          onPrivateClicked={this.onPrivateClicked}
           isSyncing={this.state.isSyncing}
         />
         <ReposView
