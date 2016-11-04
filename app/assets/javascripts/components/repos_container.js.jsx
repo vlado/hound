@@ -20,7 +20,7 @@ class ReposContainer extends React.Component {
   }
 
   onFetchReposAndOrgsSuccess(data) {
-    if (data.length == 0) {
+    if (data.length === 0) {
       this.onRefreshClicked();
     } else {
       this.setState({repos: data});
