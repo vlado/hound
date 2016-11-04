@@ -141,7 +141,6 @@ class ReposContainer extends React.Component {
       this.activateAndTrackRepoSubscription(
         repo, resp.stripe_subscription_id
       );
-
     }).catch( () => {
       alert("Your subscription could not be activated.");
     });
