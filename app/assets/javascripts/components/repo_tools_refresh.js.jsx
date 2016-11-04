@@ -1,8 +1,4 @@
 class RepoToolsRefresh extends React.Component {
-  get disabledState() {
-    return (this.isDisabled ? "disabled" : null);
-  }
-
   render() {
     const { isSyncing, onRefreshClicked } = this.props;
 
@@ -16,7 +12,7 @@ class RepoToolsRefresh extends React.Component {
       <div className="repo-tools-refresh">
         <button
           className="repo-tools-refresh-button"
-          disabled={this.disabledState}
+          disabled={isSyncing ? "disabled" : null}
           onClick={onRefreshClicked}
         >
           <span>{buttonText}</span>
