@@ -10,11 +10,7 @@ class RepoTools extends React.Component {
     return (
       <div className="repo-tools">
         <RepoToolsSearch onSearchInput={(event) => onSearchInput(event)} />
-        {
-          showPrivateButton
-          ? <RepoToolsPrivate />
-          : null
-        }
+        {showPrivateButton ? <RepoToolsPrivate /> : null}
         <RepoToolsRefresh
           isSyncing={isSyncing}
           onRefreshClicked={onRefreshClicked}
