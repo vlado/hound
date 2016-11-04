@@ -1,4 +1,12 @@
 class ReposContainer extends React.Component {
+  state = {
+    filterTerm: null,
+    isProcessingId: null,
+    isSyncing: false,
+    organizations: [],
+    repos: []
+  }
+
   fetchReposAndOrgs() {
     $.ajax({
       url: "/repos.json",
@@ -34,14 +42,6 @@ class ReposContainer extends React.Component {
 
   orgName(name) {
     return _.split(name, "/")[0];
-  }
-
-  state = {
-    isSyncing: false,
-    isProcessingId: null,
-    filterTerm: null,
-    repos: [],
-    organizations: []
   }
 
   componentWillMount() {
