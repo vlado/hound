@@ -214,7 +214,7 @@ class ReposContainer extends React.Component {
       dataType: "json",
       success: data => {
         if (data.refreshing_repos) {
-          setTimeout(() => { this.handleSync() }, 1000);
+          setTimeout(this.handleSync, 1000);
         } else {
           this.fetchReposAndOrgs();
         }
