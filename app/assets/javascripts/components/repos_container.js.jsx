@@ -281,7 +281,7 @@ class ReposContainer extends React.Component {
           organizations={this.state.organizations}
           repos={this.state.repos}
           filterTerm={this.state.filterTerm}
-          onRepoClicked={(event) => this.onRepoClicked(event)}
+          onRepoClicked={this.onRepoClicked.bind(this)}
           isProcessingId={this.state.isProcessingId}
          />
       </div>
