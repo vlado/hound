@@ -229,9 +229,7 @@ class ReposContainer extends React.Component {
       url: "/repo_syncs.json",
       type: "POST",
       dataType: "text", // to trigger success() on 201 and empty response
-      success: () => {
-        this.handleSync();
-      },
+      success: this.handleSync.bind(this),
       error: () => {
         this.setState({isSyncing: false});
         alert("Your repos failed to sync.");
