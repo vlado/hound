@@ -246,12 +246,14 @@ class ReposContainer extends React.Component {
   }
 
   trackRepoActivated(repo) {
+    let eventName = null, price = null
+
     if (repo.private) {
-      var eventName = "Private Repo Activated";
-      var price = repo.price_in_dollars;
+      eventName = "Private Repo Activated";
+      price = repo.price_in_dollars;
     } else {
-      var eventName = "Public Repo Activated";
-      var price = 0.0;
+      eventName = "Public Repo Activated";
+      price = 0.0;
     }
 
     window.analytics.track(eventName, {
