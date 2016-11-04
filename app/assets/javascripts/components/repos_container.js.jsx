@@ -243,8 +243,8 @@ class ReposContainer extends React.Component {
     $.post("/auth/github?access=full");
   }
 
-  onSearchInput(term) {
-    this.setState({filterTerm: term});
+  onSearchInput(event) {
+    this.setState({filterTerm: event.target.value});
   }
 
   trackRepoActivated(repo) {
@@ -271,7 +271,7 @@ class ReposContainer extends React.Component {
       <div>
         <RepoTools
           showPrivateButton={!has_private_access}
-          onSearchInput={(term) => this.onSearchInput(term)}
+          onSearchInput={this.onSearchInput.bind(this)}
           onRefreshClicked={(event) => this.onRefreshClicked(event)}
           onPrivateClicked={(event) => this.onPrivateClicked(event)}
           isSyncing={this.state.isSyncing}
