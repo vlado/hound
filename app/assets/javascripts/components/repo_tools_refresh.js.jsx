@@ -2,10 +2,12 @@ class RepoToolsRefresh extends React.Component {
   render() {
     const { isSyncing, onRefreshClicked } = this.props;
 
+    let buttonText = null;
+
     if (isSyncing) {
-      var buttonText = Hound.settings.syncingButtonText;
+      buttonText = Hound.settings.syncingButtonText;
     } else {
-      var buttonText = Hound.settings.syncNowButtonText;
+      buttonText = Hound.settings.syncNowButtonText;
     }
 
     return (
