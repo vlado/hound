@@ -2,7 +2,7 @@ class PopulatedRepoList extends React.Component {
   canShow(repo) {
     const { filterTerm } = this.props;
 
-    if (filterTerm == null) {
+    if (filterTerm === null) {
       return true;
     } else {
       const repoName = repo.name.toLowerCase();
