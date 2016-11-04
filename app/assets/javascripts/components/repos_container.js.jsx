@@ -174,7 +174,7 @@ class ReposContainer extends React.Component {
 
   onRepoClicked(id) {
     this.setState({isProcessingId: id});
-    let repo = _.find(this.state.repos, {id: id});
+    const repo = _.find(this.state.repos, {id: id});
 
     if (repo.active) {
       if (repo.stripe_subscription_id) {
