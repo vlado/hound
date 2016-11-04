@@ -11,7 +11,7 @@ class AccountCreditCardUpdater extends React.Component {
     $.ajax({
       url: "/credit_card.json",
       type: "PUT",
-      data: {card_token: stripeToken.id},
+      data: { card_token: stripeToken.id },
       dataType: "json"
     });
   }
