@@ -12,9 +12,7 @@ class ReposContainer extends React.Component {
       url: "/repos.json",
       type: "GET",
       dataType: "json",
-      success: data => {
-        this.onFetchReposAndOrgsSuccess(data);
-      },
+      success: this.onFetchReposAndOrgsSuccess.bind(this),
       error: () => {
         alert("Your repos failed to load.");
       }
