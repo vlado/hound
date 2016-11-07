@@ -2,7 +2,7 @@ class PopulatedRepoList extends React.Component {
   canShow(repo) {
     const { filterTerm } = this.props;
 
-    if (filterTerm == null) {
+    if (filterTerm === null) {
       return true;
     } else {
       const repoName = repo.name.toLowerCase();
@@ -15,7 +15,7 @@ class PopulatedRepoList extends React.Component {
 
     return (
       <ul className="repos">
-        {repos.filter(repo => this.canShow(repo)).map( repo => (
+        {repos.filter(this.canShow.bind(this)).map( repo => (
           <Repo
             repo={repo}
             key={repo.id}

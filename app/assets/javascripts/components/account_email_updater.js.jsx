@@ -19,23 +19,20 @@ class AccountEmailUpdater extends React.Component {
     $.ajax({
       url: "/account.json",
       type: "PUT",
-      data: {billable_email: this.state.emailInput},
+      data: { billable_email: this.state.emailInput },
       dataType: "text",
       success: () => {
-        this.setState({
-          addressChanged: true,
-          emailAddress: this.state.emailInput
-        });
+        this.setState({ addressChanged: true });
       },
       error: () => {
-        this.setState({addressChanged: false});
+        this.setState({ addressChanged: false });
       }
     });
   }
 
   render() {
     const { billable_email } = this.props;
-    const placeholder = this.state.emailAddress || billable_email;
+    const placeholder = this.state.emailInput || billable_email;
 
     return (
       <article className="account-details">
@@ -56,9 +53,7 @@ class AccountEmailUpdater extends React.Component {
             />
           </div>
           <div className="form-actions">
-            <button className="button-small" onClick={
-              event => this.onUpdateEmail(event)
-            }>
+            <button className="button-small" onClick={this.onUpdateEmail}>
               Update Email
             </button>
           </div>

@@ -1,0 +1,72 @@
+- content_for :page_title, "Your Account"
+
+= render 'settings'
+
+%section.account-section
+  %aside.account-nav
+    %h3
+      Plans
+
+    = render "shared/plan_vertical", new: false, current: true, name: "Chihuahua", allowance: "4", price: "$49"
+    = render "shared/plan_vertical", new: false,  current: false, name: "Labrador", allowance: "10", price: "$99"
+    = render "shared/plan_vertical", new: false,  current: false, name: "Great Dane", allowance: "30", price: "$249"
+
+    %p.message= t("account.bulk_pricing", mail_to: mail_to("hound@thoughtbot.com")).html_safe
+
+  .account-content
+    %article.billing-breakdown
+      = react_component("AccountCreditCardUpdater",
+          authenticity_token: form_authenticity_token,
+          stripe_customer_id_present: current_user.stripe_customer_id.present?,
+        )
+      %table.itemized-receipt
+        %thead
+          %tr
+            %th Plan
+            %th Base Cost
+            %th Quantity
+            %th Subtotal
+        %tbody
+          - @account_page.monthly_line_items.each do |line_item|
+            %tr
+              %td
+                = line_item.title
+              %td
+                = line_item.base_price
+              %td
+                = line_item.quantity
+              %td
+                = line_item.subtotal
+
+      %table.monthly-total
+        %thead
+          %tr
+            %th
+              %label Total Monthly Cost:
+            %th.total-amount
+              %label= @account_page.total_monthly_cost
+
+    - if current_user.stripe_customer_id.present?
+      = react_component("AccountEmailUpdater",
+          authenticity_token: form_authenticity_token,
+          billable_email: @account_page.billable_email,
+        )
+    %article.active-private-repos
+      - if @account_page.repos.any?
+        %h3 Active Private Repos
+        %table
+          %thead
+            %tr
+              %th Repository
+              %th Reviews given
+              %th Violations caught
+          %tbody
+            - @account_page.repos.each do |repo|
+              %tr.repo
+                %td
+                  %span.repo-name
+                    = repo.name
+                %td.reviews-given
+                  = repo.builds.count
+                %td.violations-caught
+                  = repo.total_violations

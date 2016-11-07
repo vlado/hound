@@ -19,7 +19,7 @@ class ReposView extends React.Component {
           organizations={organizations}
           repos={repos}
           filterTerm={filterTerm}
-          onRepoClicked={(evt) => onRepoClicked(evt)}
+          onRepoClicked={onRepoClicked}
           isProcessingId={isProcessingId}
         />
       );

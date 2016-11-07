@@ -4,7 +4,7 @@
   height: 120px;
   width: 100%;
 
-  @include media($medium-screen-header) {
+  @include media($medium-screen-down--header) {
     height: auto;
     padding: 1em 2em;
     text-align: center;
@@ -19,12 +19,12 @@
     border-bottom: 2px solid $base-accent-color;
     height: 80px;
 
-    @include media($medium-screen-header) {
+    @include media($medium-screen-down--header) {
       height: auto;
       padding: 0;
     }
 
-    @include media($small-screen) {
+    @include media($small-screen-only) {
       padding: 0.5em;
     }
   }
