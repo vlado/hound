@@ -19,13 +19,13 @@ class AccountEmailUpdater extends React.Component {
     $.ajax({
       url: "/account.json",
       type: "PUT",
-      data: {billable_email: this.state.emailInput},
+      data: { billable_email: this.state.emailInput },
       dataType: "text",
       success: () => {
         this.setState({ addressChanged: true });
       },
       error: () => {
-        this.setState({addressChanged: false});
+        this.setState({ addressChanged: false });
       }
     });
   }
