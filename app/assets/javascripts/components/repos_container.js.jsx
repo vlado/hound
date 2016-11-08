@@ -52,11 +52,11 @@ class ReposContainer extends React.Component {
     this.fetchReposAndOrgs();
   }
 
-  createSubscription(options) {
+  createSubscription(subscriptionOptions) {
     return $.ajax({
-      url: `/repos/${options.repo_id}/subscription.json`,
+      url: `/repos/${subscriptionOptions.repo_id}/subscription.json`,
       type: "POST",
-      data: options,
+      data: subscriptionOptions,
       dataType: "json"
     });
   }
@@ -250,7 +250,7 @@ class ReposContainer extends React.Component {
   }
 
   trackRepoActivated(repo) {
-    let eventName = null, price = null
+    let eventName = null, price = null;
 
     if (repo.private) {
       eventName = "Private Repo Activated";
