@@ -16,15 +16,18 @@ gem "haml-rails"
 gem "high_voltage"
 gem "inifile"
 gem "jquery-rails", "~> 4.2.0"
-gem "rails-assets-lodash", source: "https://rails-assets.org"
-gem "normalize-rails"
 gem "neat"
+gem "normalize-rails"
 gem "octokit"
 gem "omniauth-github"
 gem "paranoia", "~> 2.0"
 gem "pg"
 gem "puma"
 gem "rails", "4.2.7.1"
+gem "rails-assets-classnames", source: "https://rails-assets.org"
+gem "rails-assets-es5-shim", source: "https://rails-assets.org"
+gem "rails-assets-lodash", source: "https://rails-assets.org"
+gem "react-rails"
 gem "resque", "~> 1.25.0"
 gem "resque-scheduler"
 gem "resque-sentry"
@@ -44,13 +47,13 @@ group :staging, :production do
 end
 
 group :development, :test do
+  gem "bundler-audit", require: false
   gem "byebug"
   gem "dotenv-rails"
   gem "foreman"
   gem "jasmine-rails"
-  gem "rspec-rails", ">= 3.4"
-  gem "bundler-audit", require: false
   gem "quiet_assets"
+  gem "rspec-rails", ">= 3.4"
 end
 
 group :test do
