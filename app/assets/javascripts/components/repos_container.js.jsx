@@ -102,6 +102,7 @@ class ReposContainer extends React.Component {
       repo.active = false;
       repo.stripe_subscription_id = null;
       this.commitRepoToState(repo);
+      this.updateSubscribedRepoCount();
     }).catch( () => {
       alert("Your repo could not be disabled.");
     });
@@ -127,12 +128,34 @@ class ReposContainer extends React.Component {
     }
   }
 
+  updateSubscribedRepoCount() {
+    this.getUser().done(user => {
+      const subscribedRepoCount = user.subscribed_repo_count;
+      const tierAllowance = user.tier_allowance;
+
+      if (subscribedRepoCount === 0) {
+        $(".allowance").parent("li").remove();
+      } else if (subscribedRepoCount === 1 && $(".allowance").length === 0) {
+        ReactDOM.render(
+          <RepoAllowance
+            subscribedRepoCount={subscribedRepoCount}
+            tierAllowance={tierAllowance}
+          />,
+          $("header ul").last().prepend("<li></li>").children()[0]
+        );
+      } else {
+        $("[data-role='subscribed-repo-count']").text(subscribedRepoCount);
+        $("[data-role='tier-allowance']").text(tierAllowance);
+      }
+    });
+  }
+
   activateAndTrackRepoSubscription(repo, stripeSubscriptionId) {
     repo.active = true;
     repo.stripe_subscription_id = stripeSubscriptionId;
     this.trackRepoActivated(repo);
-
     this.commitRepoToState(repo);
+    this.updateSubscribedRepoCount();
   }
 
   onSubscriptionError(repo, error) {
@@ -214,17 +237,20 @@ class ReposContainer extends React.Component {
     });
   }
 
-  handleSync() {
-    $.ajax({
+  getUser() {
+    return $.ajax({
       url: "/user.json",
       type: "GET",
       dataType: "json",
-      success: data => {
-        if (data.refreshing_repos) {
-          setTimeout(this.handleSync.bind(this), 1000);
-        } else {
-          this.fetchReposAndOrgs();
-        }
+    });
+  }
+
+  handleSync() {
+    this.getUser().done(data => {
+      if (data.refreshing_repos) {
+        setTimeout(this.handleSync.bind(this), 1000);
+      } else {
+        this.fetchReposAndOrgs();
       }
     });
   }

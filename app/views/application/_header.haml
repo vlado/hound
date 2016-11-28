@@ -17,7 +17,11 @@
             .allowance
               Private Repos
               %strong
-                #{current_user.subscribed_repos.count}/#{current_user.tier_max}
+                %span{ "data-role" => "subscribed-repo-count" }
+                  #{current_user.subscribed_repos.count}
+                \/
+                %span{ "data-role" => "tier-allowance" }
+                  #{current_user.tier_max}
         %li
           = link_to account_path, class: "account" do
             - if current_user.email.present?

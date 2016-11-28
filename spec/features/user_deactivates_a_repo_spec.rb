@@ -31,4 +31,62 @@ feature "user deactivates a repo", js: true do
       end
     end
   end
+
+  scenario "user downgrades within a tier" do
+    user = create(:user, :github, :stripe)
+    first_subscription = create(:subscription, :active, user: user)
+    second_subscription = create(:subscription, :active, user: user)
+    tier = Tier.new(user)
+    previous_tier = tier.previous
+    downgraded_plan = previous_tier.id
+    stub_customer_find_request
+    stub_subscription_find_request(first_subscription)
+    stub_subscription_find_request(second_subscription)
+    stub_subscription_update_request(plan: downgraded_plan, repo_ids: "")
+
+    sign_in_as(user, "letmein")
+    expect(page).to have_text first_subscription.repo.name
+    expect(page).to have_text second_subscription.repo.name
+    first(".repo--active").find(".repo-toggle").click
+
+    expect(page).to have_text "Private Repos 1 / 4"
+  end
+
+  scenario "user downgrades from another tier" do
+    user = create(:user, :github, :stripe)
+    4.times do
+      subscription = create(:subscription, :active, user: user)
+      stub_subscription_find_request(subscription)
+    end
+    subscription = create(:subscription, :active, user: user)
+    stub_subscription_find_request(subscription)
+    tier = Tier.new(user)
+    previous_tier = tier.previous
+    downgraded_plan = previous_tier.id
+    stub_customer_find_request
+    stub_subscription_update_request(plan: downgraded_plan, repo_ids: "")
+
+    sign_in_as(user, "letmein")
+    expect(page).to have_text subscription.repo.name
+    first(".repo--active").find(".repo-toggle").click
+
+    expect(page).to have_text "Private Repos 4 / 4"
+  end
+
+  scenario "user downgrades to free tier" do
+    user = create(:user, :github, :stripe)
+    subscription = create(:subscription, :active, user: user)
+    stub_subscription_find_request(subscription)
+    tier = Tier.new(user)
+    previous_tier = tier.previous
+    downgraded_plan = previous_tier.id
+    stub_customer_find_request
+    stub_subscription_update_request(plan: downgraded_plan, repo_ids: "")
+
+    sign_in_as(user, "letmein")
+    expect(page).to have_text subscription.repo.name
+    first(".repo--active").find(".repo-toggle").click
+
+    expect(page).to_not have_css(".allowance")
+  end
 end

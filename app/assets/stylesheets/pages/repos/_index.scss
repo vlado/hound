@@ -103,11 +103,6 @@
     padding: 0.2em 0.8em;
   }
 
-  &::before {
-    content: "Activate";
-    display: inline;
-  }
-
   &:hover {
     background-color: $purple;
     color: $white;
